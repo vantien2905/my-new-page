@@ -1,0 +1,202 @@
+export default {
+  async fetch(request, env, ctx) {
+    const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>External Link QA Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #007aff;
+    }
+    h2 {
+      color: #007aff;
+      margin-top: 32px;
+      border-bottom: 2px solid #007aff22;
+      padding-bottom: 4px;
+    }
+    .link-block {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 10px 0;
+    }
+    .link-block a {
+      display: block;
+      text-decoration: none;
+      color: #007aff;
+      font-weight: 600;
+      word-wrap: break-word;
+    }
+    .url {
+      color: #666;
+      font-size: 13px;
+      margin-top: 4px;
+      word-break: break-all;
+    }
+    .section {
+      margin-top: 24px;
+    }
+    hr {
+      margin: 30px 0;
+    }
+    small {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 External Link Handler QA Test Page</h1>
+  <p>Trang này giúp QA kiểm thử tất cả các loại liên kết (web, scheme, deep link...) trong iOS WebView.</p>
+
+  <div class="section">
+    <h2>💬 WhatsApp</h2>
+    <div class="link-block">
+      <a href="https://wa.me/84999999999">WhatsApp (wa.me)</a>
+      <div class="url">https://wa.me/84999999999</div>
+    </div>
+    <div class="link-block">
+      <a href="whatsapp://send?phone=84999999999">WhatsApp (scheme)</a>
+      <div class="url">whatsapp://send?phone=84999999999</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💬 Messenger</h2>
+    <div class="link-block">
+      <a href="https://m.me/username">Messenger (m.me)</a>
+      <div class="url">https://m.me/username</div>
+    </div>
+    <div class="link-block">
+      <a href="fb-messenger://user-thread/123456789">Messenger (scheme)</a>
+      <div class="url">fb-messenger://user-thread/123456789</div>
+    </div>
+    <div class="link-block">
+      <a href="messenger://user-thread/123456789">Messenger (alt scheme)</a>
+      <div class="url">messenger://user-thread/123456789</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📘 Facebook</h2>
+    <div class="link-block">
+      <a href="https://facebook.com/somepage">Facebook (web)</a>
+      <div class="url">https://facebook.com/somepage</div>
+    </div>
+    <div class="link-block">
+      <a href="fb://profile/1234567890">Facebook (profile)</a>
+      <div class="url">fb://profile/1234567890</div>
+    </div>
+    <div class="link-block">
+      <a href="fb://page/1234567890">Facebook (page)</a>
+      <div class="url">fb://page/1234567890</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📱 Zalo</h2>
+    <div class="link-block">
+      <a href="https://zalo.me/0987654321">Zalo (web)</a>
+      <div class="url">https://zalo.me/0987654321</div>
+    </div>
+    <div class="link-block">
+      <a href="zalo://chat?phone=0987654321">Zalo (scheme)</a>
+      <div class="url">zalo://chat?phone=0987654321</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📞 Viber</h2>
+    <div class="link-block">
+      <a href="viber://chat?number=+84987654321">Viber (scheme)</a>
+      <div class="url">viber://chat?number=+84987654321</div>
+    </div>
+    <div class="link-block">
+      <a href="https://viber.com/invite/abcd1234">Viber (web)</a>
+      <div class="url">https://viber.com/invite/abcd1234</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📞 Phone & SMS</h2>
+    <div class="link-block">
+      <a href="tel://19001088">Phone (tel)</a>
+      <div class="url">tel://19001088</div>
+    </div>
+    <div class="link-block">
+      <a href="sms://12345">SMS (scheme)</a>
+      <div class="url">sms://12345</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📧 Email</h2>
+    <div class="link-block">
+      <a href="mailto:test@example.com">Email (mailto)</a>
+      <div class="url">mailto:test@example.com</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🗺️ Maps</h2>
+    <div class="link-block">
+      <a href="https://maps.google.com/?q=Hanoi">Google Maps (web)</a>
+      <div class="url">https://maps.google.com/?q=Hanoi</div>
+    </div>
+    <div class="link-block">
+      <a href="maps://?q=Hanoi">Apple Maps (scheme)</a>
+      <div class="url">maps://?q=Hanoi</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🛠️ Other Apps / Custom Schemes</h2>
+    <div class="link-block">
+      <a href="intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end">Android Intent</a>
+      <div class="url">intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end</div>
+    </div>
+    <div class="link-block">
+      <a href="myapp://open?param=value">Custom app (myapp)</a>
+      <div class="url">myapp://open?param=value</div>
+    </div>
+    <div class="link-block">
+      <a href="bankapp://transfer?amount=100000">Bank app (transfer)</a>
+      <div class="url">bankapp://transfer?amount=100000</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🌐 Normal Web Links</h2>
+    <div class="link-block">
+      <a href="https://platform.xanhsm.com">Platform internal web</a>
+      <div class="url">https://platform.xanhsm.com</div>
+    </div>
+    <div class="link-block">
+      <a href="https://google.com">Google</a>
+      <div class="url">https://google.com</div>
+    </div>
+    <div class="link-block">
+      <a href="about:blank">About blank</a>
+      <div class="url">about:blank</div>
+    </div>
+  </div>
+
+  <hr>
+  <p><small>Last updated: ${new Date().toLocaleString()}</small></p>
+</body>
+</html>`;
+    return new Response(html, {
+      headers: { "Content-Type": "text/html; charset=UTF-8" },
+    });
+  },
+};
